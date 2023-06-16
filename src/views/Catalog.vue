@@ -69,7 +69,6 @@ onMounted(() => {});
   width: 80%;
   height: 80%;
   border: 1px solid #d3d3d3;
-  /* Cinza suave para a borda */
   border-radius: 10px;
 }
 
