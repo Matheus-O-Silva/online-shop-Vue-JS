@@ -12,7 +12,7 @@ export const productsStore = defineStore('products', {
       fetch('https://dummyjson.com/products')
         .then(res => res.json())
         .then(json => {
-          this.products = json.products;
+          this.products = json.products.slice(0, 4);
         });
 
       /* { status: 'ok', method: 'GET' } */
