@@ -1,13 +1,28 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
+  <header>
+    <div class="cart-items" @click="router.push({ name: 'CartView' })">
+      <p>Items in Cart: {{ store.cart ? store.cart.length : 0 }}</p>
+    </div>
+  </header>
   <main>
     <RouterView />
   </main>
 </template>
 
-<style scoped>
+<script setup>
+import { RouterLink, RouterView, useRouter } from "vue-router";
+import { productsStore } from "./stores/products";
 
+const store = productsStore();
+const router = useRouter();
+</script>
+
+<style scoped>
+.cart-items {
+  text-align: end;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 24px;
+  cursor: pointer;
+}
 </style>
