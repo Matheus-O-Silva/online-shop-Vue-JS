@@ -97,8 +97,6 @@ onMounted(() => {});
 .descriptions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
-  /*border: 1px solid green;
-  border-radius: 10px;*/
   padding: 1%;
 }
 </style>
