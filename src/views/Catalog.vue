@@ -9,9 +9,9 @@
       <div class="descriptions">
         <img :src="product.thumbnail" alt="" />
         <div class="description">
-          <h2>Brand: {{ product.brand }}</h2>
-          <p>Description: {{ product.description }}</p>
-          <p>Price: ${{ product.price }}</p>
+          <h2 class="title">{{ product.brand }}</h2>
+          <p class="price">R${{ product.price }}</p>
+          <p class="product-description">{{ product.description }}</p>
         </div>
       </div>
     </div>
@@ -26,8 +26,8 @@
     >
       <img :src="product.thumbnail" alt="" />
       <h2>Brand: {{ product.brand }}</h2>
-      <p>Description: {{ product.description }}</p>
       <p>Price: ${{ product.price }}</p>
+      <p>Description: {{ product.description }}</p>
     </div>
   </div>
 </template>
@@ -63,16 +63,19 @@ onMounted(() => {});
 .products-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
-  padding: 10px;
-  margin: 1%;
-  margin-top: 1%;
-  border: 3px solid red;
+  padding: 5px;
+  margin: 10%;
+  margin-top: 20px;
+  width: 80%;
+  height: 80%;
+  border: 1px solid #d3d3d3;
+  /* Cinza suave para a borda */
   border-radius: 10px;
 }
 
 .product-item {
   flex-basis: 28%;
-  margin: 8px;
+  margin-left: -20px;
   padding: 16px;
   box-shadow: 0px 0px 14px 1 px #e6e6e6;
   cursor: pointer;
@@ -80,23 +83,39 @@ onMounted(() => {});
 }
 
 .product.item {
-  border: 1px solid red;
+  border: 1px solid rgb(255, 0, 0);
   border-radius: 10px;
 }
 
 .product-item img {
   width: 70%;
-  border: 1px solid red;
+  border-radius: 10px;
 }
 
 .description {
-  border: 1px solid red;
-  border-radius: 10px;
+  font-size: 15px;
+  margin-left: -50px;
+  width: 120%;
+  height: 80%;
 }
 
 .descriptions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
   padding: 1%;
+}
+
+.title {
+  margin-top: 5px;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.price {
+  margin-top: 5px;
+}
+
+.product-description {
+  margin-top: 5px;
 }
 </style>
