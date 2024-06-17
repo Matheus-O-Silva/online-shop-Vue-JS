@@ -8,6 +8,7 @@
     role="dialog"
     aria-hidden="false"
     @keydown.esc="closeModal"
+    style="background-color: rgba(0, 0, 0, 0.5)"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -24,7 +25,15 @@
         </div>
         <div class="modal-body">
           <div class="product-image">
-            <img class="image-modal" :src="store.selectedProduct?.thumbnail" alt="" />
+            <div v-if="!imageLoaded" class="placeholder">Carregando...</div>
+            <img
+              v-else
+              class="image-modal"
+              :src="store.selectedProduct?.thumbnail"
+              alt=""
+              @load="imageLoaded = true"
+              @error="imageError = true"
+            />
           </div>
           <p>{{ store.selectedProduct?.description }}</p>
           <p><strong>Preço:</strong> R${{ store.selectedProduct?.price }}</p>
@@ -41,16 +50,20 @@
 </template>
 
 <script setup>
+import { ref, watch } from "vue";
 import { productsStore } from "@/stores/products";
-import { watch } from "vue";
 
 const store = productsStore();
+const imageLoaded = ref(false);
+const imageError = ref(false);
 
 watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      store.modal = true; // Open Modal when the Product is loaded
+      store.modal = true;
+      imageLoaded.value = true; // Resetar quando um novo produto é selecionado
+      imageError.value = false; // Resetar erros
     }
   }
 );
@@ -63,7 +76,7 @@ const closeModal = () => {
 
 <style scoped>
 .product-image {
-  box-shadow: 0px 0px 14px 1px #e6e6e6; /* Corrigido espaço no '1px' */
+  box-shadow: 0px 0px 14px 1px #2a2828;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -71,12 +84,25 @@ const closeModal = () => {
 }
 
 .image-modal {
-  width: 50%; /* Mudando para 100% para ser responsivo */
-  max-width: 400px; /* Limita a largura máxima do modal */
-  height: auto; /* Ajusta a altura automaticamente */
+  width: 60%;
+  max-width: 100%;
+  height: auto;
+  display: block; /* Garante que a imagem ocupa espaço */
+}
+
+.placeholder {
+  width: 100%; /* Para que o espaço seja mantido */
+  max-width: 400px;
+  height: 300px; /* Defina uma altura fixa para o placeholder */
+  background-color: #f0f0f0; /* Cor de fundo do placeholder */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #aaa; /* Cor do texto do placeholder */
 }
 
 .modal {
-  transition: opacity 0.3s ease; /* Adicionando transição */
+  transition: opacity 0.3s ease;
 }
 </style>
