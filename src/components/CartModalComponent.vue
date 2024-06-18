@@ -68,6 +68,7 @@
 <script setup lang="ts">
 import { ref, watch, defineEmits, computed } from "vue";
 import { productsStore } from "@/stores/products";
+import Swal from "sweetalert2";
 import type { ProductInterface } from "@/types/ProductInterface";
 
 const totalPriceCart = computed(() => {
@@ -81,6 +82,12 @@ const totalPriceCart = computed(() => {
 const store = productsStore();
 const removefromCart = (id: number) => {
   store.removeFromCart(id);
+  Swal.fire({
+    title: "Produto removido com sucesso",
+    text: "",
+    icon: "success",
+    confirmButtonText: "Ok",
+  });
 };
 
 const confirmOrder = () => {

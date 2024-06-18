@@ -74,6 +74,7 @@
 
 <script setup lang="ts">
 import { ref, watch, defineEmits } from "vue";
+import Swal from "sweetalert2";
 import { productsStore } from "@/stores/products";
 import type { ProductInterface } from "@/types/ProductInterface";
 
@@ -94,6 +95,13 @@ const addToCart = () => {
     };
 
     store.addToCart(productAdded);
+
+    Swal.fire({
+      title: "Produto adicionado com sucesso",
+      text: "",
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
   } else {
     console.error("error in add product operation");
   }
