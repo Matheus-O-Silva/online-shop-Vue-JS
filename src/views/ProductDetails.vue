@@ -1,4 +1,5 @@
 <template>
+    <button @click="router.push({ name: 'Catalog' })">Back to Catalog</button>
     <div class="product">
         <div class="product-image">
             <img :src="selectedProduct.thumbnail" alt="">
