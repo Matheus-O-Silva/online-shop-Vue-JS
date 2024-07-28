@@ -1,6 +1,6 @@
 import type { ProductInterface } from "./ProductInterface";
 
-export interface StateInterface {
+export interface productStateInterface {
     products: ProductInterface[];
     cart: ProductInterface[];
     modal: boolean;

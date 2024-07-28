@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia';
 import type { ProductInterface } from '@/types/ProductInterface';
-import type { StateInterface } from  '@/types/StateInterface';
-
+import type { productStateInterface } from  '@/types/productStateInterface';
 
 export const productsStore = defineStore('products', {
-  state: (): StateInterface => ({
+  state: (): productStateInterface => ({
     products: [],
     cart: [],
     modal: false,
@@ -15,7 +14,7 @@ export const productsStore = defineStore('products', {
     async fetchProductsFromDB() {
       const response = await fetch('https://dummyjson.com/products');
       const json = await response.json();
-      this.products = json.products.slice(0, 4);
+      this.products = json.products.slice(0, 8);
     },
     async getSelectProduct(id: number) {
       const response = await fetch(`https://dummyjson.com/products/${id}`);
