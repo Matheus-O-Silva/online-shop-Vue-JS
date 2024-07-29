@@ -63,6 +63,13 @@ const handleRegister = () => {
 </script>
 
 <style scoped>
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+}
+
 .card-title {
   font-weight: bold;
 }

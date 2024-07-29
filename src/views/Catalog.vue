@@ -1,20 +1,22 @@
 <template>
   <div>
     <ModalComponent :isOpen="isModalOpen" :product="null" @close="closeModal" />
-    <Preloader v-if="isLoading" />
-    <div v-else class="products-list">
-      <div
-        class="product-item"
-        v-for="product in store.products"
-        :key="product.id"
-        @click="showProductDetails(product.id)"
-      >
-        <div class="descriptions">
-          <img :src="product.thumbnail" alt="" />
-          <div class="description">
-            <h2 class="title">{{ product.brand }}</h2>
-            <p class="price">R${{ product.price }}</p>
-            <p class="product-description">{{ product.description }}</p>
+    <div class="catalog-container">
+      <Preloader v-if="isLoading" />
+      <div v-else class="products-list">
+        <div
+          class="product-item"
+          v-for="product in store.products"
+          :key="product.id"
+          @click="showProductDetails(product.id)"
+        >
+          <div class="descriptions">
+            <img :src="product.thumbnail" alt="" />
+            <div class="description">
+              <h2 class="title">{{ product.brand }}</h2>
+              <p class="price">R${{ product.price }}</p>
+              <p class="product-description">{{ product.description }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -60,6 +62,11 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.catalog-container {
+  overflow-y: auto;
+  height: 100vh;
+  padding: -1rem;
+}
 .products-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watchEffect } from "vue";
+import { ref } from "vue";
 import { productsStore } from "@/stores/products";
 
 const isLoading = ref<boolean>(true);
