@@ -63,10 +63,10 @@ onMounted(() => {});
 .products-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
-
-  border: 1px solid red;
   padding: 10px;
+  margin: 1%;
   margin-top: 1%;
+  border: 3px solid red;
   border-radius: 10px;
 }
 
@@ -77,9 +77,6 @@ onMounted(() => {});
   box-shadow: 0px 0px 14px 1 px #e6e6e6;
   cursor: pointer;
   padding: 5%;
-
-  border: 1px solid red;
-  border-radius: 10px;
 }
 
 .product.item {
@@ -100,7 +97,8 @@ onMounted(() => {});
 .descriptions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
-  border: 1px solid green;
-  border-radius: 10px;
+  /*border: 1px solid green;
+  border-radius: 10px;*/
+  padding: 1%;
 }
 </style>
