@@ -10,7 +10,11 @@
   />
   <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm navbartop">
     <div class="container">
-      <a class="navbar-brand font-bold text-white navbarTitle" href=""> Delivery </a>
+      <router-link
+        class="navbar-brand font-bold text-white navbarTitle"
+        :to="{ name: 'Catalog' }"
+        >Delivery</router-link
+      >
       <button
         class="navbar-toggler"
         type="button"
