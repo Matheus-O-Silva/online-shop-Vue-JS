@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Catalog from '@/views/Catalog.vue';
 import Auth from '@/views/Auth.vue';
+import Register from '@/views/Register.vue';
 
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
       path: '/',
       name: 'Auth',
       component: Auth,
+    },
+    {
+      path: '/cadastrar',
+      name: 'Register',
+      component: Register,
     }
   ]
 })

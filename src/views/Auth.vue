@@ -1,7 +1,7 @@
 <template>
   <Preloader v-if="isLoading" />
   <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-sm" style="width: 400px">
+    <div class="card p-4 shadow-sm" id="main-card" style="width: 400px">
       <h3 class="card-title text-center">Login</h3>
       <form @submit.prevent="handleLogin">
         <div class="mb-3">
@@ -19,7 +19,7 @@
           />
         </div>
         <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Entrar</button>
+          <button type="submit" class="btn btn-danger">Entrar</button>
         </div>
       </form>
       <div class="text-center mt-3">
@@ -38,60 +38,8 @@ const isModalOpen = ref<boolean>(false);
 </script>
 
 <style scoped>
-.products-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin: 10%;
-  margin-top: 50px;
-  border: 1px solid #d3d3d3;
-  border-radius: 10px;
-}
-
-.product-item {
+#main-card {
   display: flex;
-  padding: 16px;
-  box-shadow: 0px 0px 14px 1px #e6e6e6;
-  cursor: pointer;
-  border-radius: 10px;
-  background-color: #fff;
-}
-
-.descriptions {
-  display: flex;
-  align-items: center;
-}
-
-.product-item img {
-  width: 80px;
-  height: auto;
-  border-radius: 8px;
-  margin-right: 15px;
-}
-
-.description {
-  font-size: 15px;
-  flex-grow: 1;
-}
-
-.title {
-  margin-top: 5px;
-  font-size: 17px;
-  font-weight: bold;
-}
-
-.price {
-  margin-top: 5px;
-  font-weight: bold;
-}
-
-.product-description {
-  margin-top: 5px;
-}
-
-@media (max-width: 600px) {
-  .products-list {
-    grid-template-columns: 1fr;
-  }
+  margin-top: -3%;
 }
 </style>

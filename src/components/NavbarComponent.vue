@@ -72,8 +72,10 @@
             </router-link>
           </li>
 
-          <li class="nav-item Icons">
-            <a class="nav-link" href="" style="color: white">Cadastrar</a>
+          <li v-if="route.name !== 'Register'" class="nav-item Icons">
+            <router-link class="nav-link" style="color: white" :to="{ name: 'Register' }">
+              Cadastrar
+            </router-link>
           </li>
         </ul>
       </div>
