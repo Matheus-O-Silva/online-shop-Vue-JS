@@ -86,7 +86,7 @@ onMounted(async () => {
   background-color: #fff;
   align-items: center;
   width: 100%;
-  height: 120px; /* Definindo altura fixa para o card */
+  height: 160px;
 }
 
 .descriptions {
@@ -114,7 +114,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%; /* Garante que o conteúdo ocupe a altura do card */
+  height: 100%;
 }
 
 .title,
@@ -129,7 +129,7 @@ onMounted(async () => {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Limita a descrição a 2 linhas */
+  -webkit-line-clamp: 2;
   font-size: 14px;
   color: #555;
 }
