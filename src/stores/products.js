@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 export const productsStore = defineStore('products', {
   state: () => ({
     products: [],
-    cart: []
+    cart: [],
+    modal: false
   }),
 
   actions: {
@@ -22,6 +23,9 @@ export const productsStore = defineStore('products', {
     },
     removeFromCart(id) {
       this.cart = this.cart.filter((item) => item.id !== id)
+    },
+    openCloseModal() {
+      this.modal = !this.modal;
     }
   }
 

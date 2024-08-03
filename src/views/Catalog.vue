@@ -4,7 +4,7 @@
       class="product-item"
       v-for="product in store.products"
       :key="product.id"
-      @click="goToProductPage(product.id)"
+      @click="showModal()"
     >
       <div class="descriptions">
         <img :src="product.thumbnail" alt="" />
@@ -18,12 +18,7 @@
   </div>
 
   <div class="products-list">
-    <div
-      class="product-item"
-      v-for="product in store.products"
-      :key="product.id"
-      @click="goToProductPage(product.id)"
-    >
+    <div class="product-item" v-for="product in store.products" :key="product.id">
       <img :src="product.thumbnail" alt="" />
       <h2>Brand: {{ product.brand }}</h2>
       <p>Price: ${{ product.price }}</p>
@@ -47,6 +42,11 @@ import { useRouter } from "vue-router";
 
 const store = productsStore();
 const router = useRouter();
+
+const showModal = () => {
+  store.openCloseModal();
+  console.log(store.modal);
+};
 
 const goToProductPage = (id) => {
   router.push({ name: "ProductView", params: { id } });
