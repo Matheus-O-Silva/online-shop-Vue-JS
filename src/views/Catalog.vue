@@ -4,7 +4,7 @@
       class="product-item"
       v-for="product in store.products"
       :key="product.id"
-      @click="showModal()"
+      @click="showModal(product.id)"
     >
       <div class="descriptions">
         <img :src="product.thumbnail" alt="" />
@@ -43,9 +43,8 @@ import { useRouter } from "vue-router";
 const store = productsStore();
 const router = useRouter();
 
-const showModal = () => {
+const showModal = (id) => {
   store.openCloseModal();
-  console.log(store.modal);
 };
 
 const goToProductPage = (id) => {
