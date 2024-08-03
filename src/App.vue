@@ -1,4 +1,6 @@
 <template>
+  <NavbarComponent />
+  <ModalComponent />
   <header>
     <div class="cart-items" @click="router.push({ name: 'CartView' })">
       <p>Items in Cart: {{ store.cart ? store.cart.length : 0 }}</p>
@@ -15,6 +17,19 @@ import { productsStore } from "./stores/products";
 
 const store = productsStore();
 const router = useRouter();
+</script>
+
+<script>
+import NavbarComponent from "./components/NavbarComponent.vue";
+import ModalComponent from "./components/ModalComponent.vue";
+
+export default {
+  name: "App",
+  components: {
+    NavbarComponent,
+    ModalComponent,
+  },
+};
 </script>
 
 <style scoped>
