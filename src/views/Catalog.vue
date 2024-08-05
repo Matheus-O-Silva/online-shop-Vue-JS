@@ -43,20 +43,8 @@ import { useRouter } from "vue-router";
 const store = productsStore();
 const router = useRouter();
 
-/*
-const showModal = (id) => {
-  store.selectedProduct = id;
-  store.getSelectProduct(id);
-  store.openCloseModal();
-};
-*/
-
 const showProductDetails = (id) => {
-  store.getSelectProduct(id); // Busca os detalhes do produto clicado
-  store.modal = true; // Abre o modal
-};
-const goToProductPage = (id) => {
-  router.push({ name: "ProductView", params: { id } });
+  store.getSelectProduct(id); // Search product details
 };
 
 onMounted(() => {
