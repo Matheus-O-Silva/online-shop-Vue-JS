@@ -4,7 +4,8 @@ export const productsStore = defineStore('products', {
   state: () => ({
     products: [],
     cart: [],
-    modal: false
+    modal: false,
+    selectedProduct: null
   }),
 
   actions: {
@@ -17,6 +18,13 @@ export const productsStore = defineStore('products', {
         });
 
       /* { status: 'ok', method: 'GET' } */
+    },
+    getSelectProduct(id) {
+      fetch(`https://dummyjson.com/products/${id}`)
+        .then(res => res.json())
+        .then(product => {
+          this.selectedProduct = product;
+        });
     },
     addToCart(product) {
       this.cart.push(product);
