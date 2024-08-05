@@ -12,7 +12,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalLabel">
-            <slot name="title">Título do Modal</slot>
+            <slot name="title">{{ store.selectedProduct?.brand }}</slot>
           </h5>
           <button
             type="button"
@@ -22,7 +22,8 @@
           ></button>
         </div>
         <div class="modal-body">
-          <slot></slot>
+          <p>{{ store.selectedProduct?.description }}</p>
+          <p><strong>Preço:</strong> R${{ store.selectedProduct?.price }}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" @click="closeModal">
