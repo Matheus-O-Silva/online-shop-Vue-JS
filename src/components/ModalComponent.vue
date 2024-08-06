@@ -22,6 +22,9 @@
           ></button>
         </div>
         <div class="modal-body">
+          <div class="product-image">
+            <img class="image-modal" :src="store.selectedProduct?.thumbnail" alt="" />
+          </div>
           <p>{{ store.selectedProduct?.description }}</p>
           <p><strong>Preço:</strong> R${{ store.selectedProduct?.price }}</p>
         </div>
@@ -65,5 +68,16 @@ const closeModal = () => {
 </script>
 
 <style scoped>
-/* Adicione seus estilos personalizados para o modal aqui */
+.product-image {
+  box-shadow: 0px 0px 14px 1 px #e6e6e6;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;
+}
+
+.image-modal {
+  width: 50%;
+  height: 50%;
+}
 </style>
