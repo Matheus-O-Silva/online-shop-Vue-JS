@@ -1,57 +1,57 @@
 <template>
-  <div class="products-list">
-    <div
-      class="product-item"
-      v-for="product in store.products"
-      :key="product.id"
-      @click="showProductDetails(product.id)"
-    >
-      <div class="descriptions">
-        <img :src="product.thumbnail" alt="" />
-        <div class="description">
-          <h2 class="title">{{ product.brand }}</h2>
-          <p class="price">R${{ product.price }}</p>
-          <p class="product-description">{{ product.description }}</p>
+  <div>
+    <!-- Exibe o preloader enquanto isLoading é verdadeiro -->
+    <Preloader v-if="isLoading" />
+    <!-- Exibe a lista de produtos quando isLoading é falso -->
+    <div v-else class="products-list">
+      <div
+        class="product-item"
+        v-for="product in store.products"
+        :key="product.id"
+        @click="showProductDetails(product.id)"
+      >
+        <div class="descriptions">
+          <img :src="product.thumbnail" alt="" />
+          <div class="description">
+            <h2 class="title">{{ product.brand }}</h2>
+            <p class="price">R${{ product.price }}</p>
+            <p class="product-description">{{ product.description }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="products-list">
-    <div class="product-item" v-for="product in store.products" :key="product.id">
-      <img :src="product.thumbnail" alt="" />
-      <h2>Brand: {{ product.brand }}</h2>
-      <p>Price: ${{ product.price }}</p>
-      <p>Description: {{ product.description }}</p>
-    </div>
-  </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "CatalogView",
-});
-</script>
-
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import { productsStore } from "@/stores/products";
-import { useRouter } from "vue-router";
+import Preloader from "@/components/Preloader.vue";
 
+// Estado de carregamento
+const isLoading = ref(true);
 const store = productsStore();
-const router = useRouter();
 
+// Função para mostrar os detalhes do produto
 const showProductDetails = (id) => {
-  store.getSelectProduct(id); // Search product details
+  store.getSelectProduct(id); // Busca detalhes do produto
 };
 
-onMounted(() => {
-  store.fetchProductsFromDB();
+// Usando watchEffect para gerenciar o estado de carregamento
+watchEffect(() => {
+  if (store.products.length > 0) {
+    isLoading.value = false; // Define isLoading como false quando produtos estiverem carregados
+  }
 });
 
-onMounted(() => {});
+// Carrega os dados dos produtos quando o componente é montado
+onMounted(async () => {
+  try {
+    await store.fetchProductsFromDB();
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+  }
+});
 </script>
 
 <style scoped>
@@ -111,5 +111,9 @@ onMounted(() => {});
 
 .product-description {
   margin-top: 5px;
+}
+
+[v-cloak] {
+  display: none;
 }
 </style>
