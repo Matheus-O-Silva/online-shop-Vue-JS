@@ -45,21 +45,14 @@ import { onMounted, watch } from "vue";
 
 const store = productsStore();
 
-// Observe as mudanças em store.selectedProduct e abra o modal quando os dados forem carregados
 watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      store.modal = true; // Abre o modal quando o produto é carregado
+      store.modal = true; // Open Modal when the Product is loaded
     }
   }
 );
-
-// Carrega os dados do produto quando o modal é montado
-onMounted(() => {
-  // Aqui, o ID do produto pode ser passado como uma prop ou recuperado de outra forma
-  // Exemplo: getSelectProduct(productId);
-});
 
 const closeModal = () => {
   store.selectedProduct = null;

@@ -1,8 +1,7 @@
 <template>
   <div>
-    <!-- Exibe o preloader enquanto isLoading é verdadeiro -->
     <Preloader v-if="isLoading" />
-    <!-- Exibe a lista de produtos quando isLoading é falso -->
+
     <div v-else class="products-list">
       <div
         class="product-item"
@@ -28,23 +27,19 @@ import { ref, onMounted, watchEffect } from "vue";
 import { productsStore } from "@/stores/products";
 import Preloader from "@/components/Preloader.vue";
 
-// Estado de carregamento
 const isLoading = ref(true);
 const store = productsStore();
 
-// Função para mostrar os detalhes do produto
 const showProductDetails = (id) => {
   store.getSelectProduct(id); // Busca detalhes do produto
 };
 
-// Usando watchEffect para gerenciar o estado de carregamento
 watchEffect(() => {
   if (store.products.length > 0) {
     isLoading.value = false; // Define isLoading como false quando produtos estiverem carregados
   }
 });
 
-// Carrega os dados dos produtos quando o componente é montado
 onMounted(async () => {
   try {
     await store.fetchProductsFromDB();
