@@ -10,12 +10,11 @@ import { onMounted, watch } from "vue";
 
 const store = productsStore();
 
-// Observe as mudanças em store.selectedProduct e abra o modal quando os dados forem carregados
 watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      store.modal = true; // Abre o modal quando o produto é carregado
+      store.modal = true;
     }
   }
 );
