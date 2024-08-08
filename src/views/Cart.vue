@@ -1,4 +1,7 @@
 <template>
+  <div class="cart-items" @click="router.push({ name: 'CartView' })">
+    <p>Items in Cart: {{ store.cart ? store.cart.length : 0 }}</p>
+  </div>
   <button @click="router.push({ name: 'Catalog' })">Back to catalog</button>
   <div v-if="!store.cart.length" style="text-align: center">
     <h1>Empty Cart ...</h1>

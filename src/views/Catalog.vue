@@ -1,7 +1,6 @@
 <template>
   <div>
     <Preloader v-if="isLoading" />
-
     <div v-else class="products-list">
       <div
         class="product-item"
@@ -52,46 +51,38 @@ onMounted(async () => {
 <style scoped>
 .products-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
-  padding: 5px;
+  grid-template-columns: repeat(2, 1fr); /* Exibe 2 produtos por linha */
+  gap: 20px; /* Espaço entre os produtos */
   margin: 10%;
-  margin-top: 20px;
-  width: 80%;
-  height: 80%;
+  margin-top: 50px;
   border: 1px solid #d3d3d3;
   border-radius: 10px;
 }
 
 .product-item {
-  flex-basis: 28%;
-  margin-left: -20px;
+  display: flex; /* Usar Flexbox para alinhar a descrição e a imagem */
   padding: 16px;
-  box-shadow: 0px 0px 14px 1 px #e6e6e6;
+  box-shadow: 0px 0px 14px 1px #e6e6e6;
   cursor: pointer;
-  padding: 5%;
+  border-radius: 10px; /* Bordas arredondadas */
+  background-color: #fff; /* Fundo branco */
 }
 
-.product.item {
-  border: 1px solid rgb(255, 0, 0);
-  border-radius: 10px;
+.descriptions {
+  display: flex; /* Flexbox para a descrição */
+  align-items: center; /* Alinhamento vertical no centro */
 }
 
 .product-item img {
-  width: 70%;
-  border-radius: 10px;
+  width: 80px; /* Ajuste o tamanho da imagem */
+  height: auto; /* Manter a proporção */
+  border-radius: 8px; /* Bordas arredondadas na imagem */
+  margin-right: 15px; /* Espaço entre a imagem e a descrição */
 }
 
 .description {
   font-size: 15px;
-  margin-left: -50px;
-  width: 120%;
-  height: 80%;
-}
-
-.descriptions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
-  padding: 1%;
+  flex-grow: 1; /* Para que a descrição ocupe o espaço restante */
 }
 
 .title {
@@ -102,6 +93,7 @@ onMounted(async () => {
 
 .price {
   margin-top: 5px;
+  font-weight: bold; /* Deixar o preço em negrito */
 }
 
 .product-description {
@@ -110,5 +102,12 @@ onMounted(async () => {
 
 [v-cloak] {
   display: none;
+}
+
+/* Media Query para telas menores */
+@media (max-width: 600px) {
+  .products-list {
+    grid-template-columns: 1fr; /* Exibe 1 produto por linha */
+  }
 }
 </style>
