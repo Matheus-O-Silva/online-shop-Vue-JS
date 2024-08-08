@@ -1,11 +1,6 @@
 <template>
   <NavbarComponent />
   <ModalComponent />
-  <header>
-    <div class="cart-items" @click="router.push({ name: 'CartView' })">
-      <p>Items in Cart: {{ store.cart ? store.cart.length : 0 }}</p>
-    </div>
-  </header>
   <main>
     <RouterView />
   </main>

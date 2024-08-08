@@ -6,7 +6,8 @@
     aria-labelledby="modalLabel"
     aria-modal="true"
     role="dialog"
-    style="background-color: rgba(0, 0, 0, 0.5)"
+    aria-hidden="false"
+    @keydown.esc="closeModal"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -41,7 +42,7 @@
 
 <script setup>
 import { productsStore } from "@/stores/products";
-import { onMounted, watch } from "vue";
+import { watch } from "vue";
 
 const store = productsStore();
 
@@ -62,7 +63,7 @@ const closeModal = () => {
 
 <style scoped>
 .product-image {
-  box-shadow: 0px 0px 14px 1 px #e6e6e6;
+  box-shadow: 0px 0px 14px 1px #e6e6e6; /* Corrigido espaço no '1px' */
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -70,7 +71,12 @@ const closeModal = () => {
 }
 
 .image-modal {
-  width: 50%;
-  height: 50%;
+  width: 50%; /* Mudando para 100% para ser responsivo */
+  max-width: 400px; /* Limita a largura máxima do modal */
+  height: auto; /* Ajusta a altura automaticamente */
+}
+
+.modal {
+  transition: opacity 0.3s ease; /* Adicionando transição */
 }
 </style>

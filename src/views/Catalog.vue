@@ -55,7 +55,7 @@ onMounted(async () => {
   grid-template-columns: repeat(auto-fit, minmax(50%, 2fr));
   padding: 5px;
   margin: 10%;
-  margin-top: 20px;
+  margin-top: 50px;
   width: 80%;
   height: 80%;
   border: 1px solid #d3d3d3;
