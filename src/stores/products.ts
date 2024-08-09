@@ -1,15 +1,10 @@
 import { defineStore } from 'pinia';
 import type { ProductInterface } from '@/types/ProductInterface';
+import type { StateInterface } from  '@/types/StateInterface';
 
-interface State {
-  products: ProductInterface[];
-  cart: [];
-  modal: boolean;
-  selectedProduct: ProductInterface | null;
-}
 
 export const productsStore = defineStore('products', {
-  state: (): State => ({
+  state: (): StateInterface => ({
     products: [],
     cart: [],
     modal: false,

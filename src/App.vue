@@ -1,6 +1,5 @@
 <template>
   <NavbarComponent />
-  <ModalComponent />
   <main>
     <RouterView />
   </main>
@@ -16,13 +15,11 @@ const router = useRouter();
 
 <script>
 import NavbarComponent from "./components/NavbarComponent.vue";
-import ModalComponent from "./components/ModalComponent.vue";
 
 export default {
   name: "App",
   components: {
     NavbarComponent,
-    ModalComponent,
   },
 };
 </script>

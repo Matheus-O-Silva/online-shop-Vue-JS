@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="store.modal"
+    v-if="isOpen"
     class="modal fade show d-block"
     tabindex="-1"
     aria-labelledby="modalLabel"
@@ -20,7 +20,7 @@
             type="button"
             class="btn-close"
             aria-label="Close"
-            @click="closeModal"
+            @click="$emit('close')"
           ></button>
         </div>
         <div class="modal-body">
@@ -39,7 +39,7 @@
           <p><strong>Preço:</strong> R${{ store.selectedProduct?.price }}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="closeModal">
+          <button type="button" class="btn btn-secondary" @click="$emit('close')">
             Fechar
           </button>
           <slot name="footer"></slot>
@@ -50,18 +50,30 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, defineEmits } from "vue";
 import { productsStore } from "@/stores/products";
 
 const store = productsStore();
 const imageLoaded = ref(false);
 const imageError = ref(false);
 
+const emit = defineEmits(["close"]);
+
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true,
+  },
+  product: {
+    type: Object,
+    default: null,
+  },
+});
+
 watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      store.modal = true;
       imageLoaded.value = true; // Resetar quando um novo produto é selecionado
       imageError.value = false; // Resetar erros
     }
@@ -69,8 +81,8 @@ watch(
 );
 
 const closeModal = () => {
-  store.selectedProduct = null;
-  store.modal = false;
+  console.log("clicoou");
+  isModalOpen.value = false;
 };
 </script>
 

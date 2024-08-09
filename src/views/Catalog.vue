@@ -1,5 +1,10 @@
 <template>
   <div>
+    <ModalComponent
+      :isOpen="isModalOpen"
+      :product="selectedProduct"
+      @close="closeModal"
+    />
     <Preloader v-if="isLoading" />
     <div v-else class="products-list">
       <div
@@ -25,12 +30,21 @@
 import { ref, onMounted, watchEffect } from "vue";
 import { productsStore } from "@/stores/products";
 import Preloader from "@/components/Preloader.vue";
+import ModalComponent from "@/components/ModalComponent.vue";
 
 const isLoading = ref(true);
+const isModalOpen = ref(false);
 const store = productsStore();
 
 const showProductDetails = (id) => {
   store.getSelectProduct(id); // Busca detalhes do produto
+  isModalOpen.value = true;
+  console.log(isModalOpen);
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  selectedProduct.value = null;
 };
 
 watchEffect(() => {
