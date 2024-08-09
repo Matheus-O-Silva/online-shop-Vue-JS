@@ -9,15 +9,6 @@ import { productsStore } from "@/stores/products";
 import { onMounted, watch } from "vue";
 
 const store = productsStore();
-
-watch(
-  () => store.selectedProduct,
-  (newProduct) => {
-    if (newProduct) {
-      store.modal = true;
-    }
-  }
-);
 </script>
 
 <style scoped>
