@@ -49,26 +49,23 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch, defineEmits } from "vue";
 import { productsStore } from "@/stores/products";
+import type { ProductInterface } from "@/types/ProductInterface";
 
 const store = productsStore();
-const imageLoaded = ref(false);
-const imageError = ref(false);
+const imageLoaded = ref<boolean>(false);
+const imageError = ref<boolean>(false);
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits<{
+  (event: "close"): void;
+}>();
 
-const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    required: true,
-  },
-  product: {
-    type: Object,
-    default: null,
-  },
-});
+const props = defineProps<{
+  isOpen: boolean;
+  product: ProductInterface | null;
+}>();
 
 watch(
   () => store.selectedProduct,
@@ -79,11 +76,6 @@ watch(
     }
   }
 );
-
-const closeModal = () => {
-  console.log("clicoou");
-  isModalOpen.value = false;
-};
 </script>
 
 <style scoped>
