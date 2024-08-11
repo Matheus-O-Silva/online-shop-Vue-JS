@@ -13,8 +13,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">
-            <slot name="title"></slot>
+          <h5 class="modal-title">
+            <slot class="titleModal" name="title"></slot>
           </h5>
           <button
             type="button"
@@ -106,6 +106,9 @@ watch(
 </script>
 
 <style scoped>
+.modal-title {
+  font-size: 30px;
+}
 .product-list {
   list-style-type: none;
   padding: 0;

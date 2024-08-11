@@ -88,7 +88,7 @@ const addToCart = () => {
     const productAdded: ProductInterface = {
       ...store.selectedProduct,
       totalPrice: store.selectedProduct.price * quantity.value,
-      price: store.selectedProduct.price,
+      price: store.selectedProduct.price * quantity.value,
       quantity: quantity.value,
       orderDetails: orderDetails.value,
     };
@@ -121,7 +121,7 @@ watch(
 
 <style scoped>
 .product-image {
-  box-shadow: 0px 0px 14px 1px #5a5555;
+  box-shadow: 0px 0px 14px 1px #2a2828;
   cursor: pointer;
   display: flex;
   justify-content: center;

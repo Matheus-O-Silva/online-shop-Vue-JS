@@ -1,6 +1,6 @@
 <template>
   <CartModalComponent :product="null" :isOpen="isModalOpen" @close="isModalOpen = false">
-    <template #title> {{ modalTitle }} </template>
+    <template #title> {{ modalTitle }}</template>
   </CartModalComponent>
   <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm navbartop">
     <div class="container">
