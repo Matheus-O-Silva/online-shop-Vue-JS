@@ -27,9 +27,6 @@ export const productsStore = defineStore('products', {
     },
     removeFromCart(id: number) {
       //this.cart = this.cart.filter((item) => item.id !== id);
-    },
-    openCloseModal() {
-      this.modal = !this.modal;
     }
   }
 });
