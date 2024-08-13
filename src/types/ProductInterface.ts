@@ -6,6 +6,6 @@ export interface ProductInterface {
     totalPrice: number;
     brand: string;
     thumbnail: string;
-    orderDetails?: string | null;
-    quantity?: number | null
+    orderDetails: string | null;
+    quantity: number | null
   }

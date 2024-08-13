@@ -32,9 +32,9 @@
               <img class="image-modal" :src="product.thumbnail" alt="" />
               <div class="product-details">
                 <h2>{{ product.title }}</h2>
-                <p class="price">Preço: R$ {{ product.price.toFixed(2) }}</p>
+                <p class="price">Preço: R${{ product.price.toFixed(2) }}</p>
                 <p>Quantidade: {{ product.quantity }}</p>
-                <p class="total">Total: R$ {{ product.totalPrice.toFixed(2) }}</p>
+                <p class="total">Total: R${{ product.totalPrice.toFixed(2) }}</p>
               </div>
               <button @click="removefromCart(product.id)" class="btn btn-danger">
                 Remover

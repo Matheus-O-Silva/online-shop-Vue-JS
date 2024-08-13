@@ -24,7 +24,15 @@ export const productsStore = defineStore('products', {
     },
     addToCart(product: ProductInterface): void {
       if(product){
-        this.cart.push(product);
+        const existingProduct = this.cart.find((item) => item.id === product.id);
+
+        if (existingProduct) {
+          existingProduct.quantity = (existingProduct.quantity || 1) + (product.quantity || 1);
+          existingProduct.totalPrice = existingProduct.quantity * existingProduct.price;
+        }else {
+          this.cart.push(product);
+        }
+        
       }
       
       return;
