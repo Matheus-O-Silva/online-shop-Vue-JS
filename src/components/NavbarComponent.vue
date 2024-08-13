@@ -1,7 +1,13 @@
 <template>
   <CartModalComponent :isOpen="isModalOpen" @close="isModalOpen = false">
-    <template #title> Carrinho </template>
+    <template #title> {{ modalTitle }} </template>
   </CartModalComponent>
+  <OrdersModalComponent
+    :isOrdersModalOpen="isOrdersModalOpen"
+    @close="isModalOpen = false"
+  >
+    <template #title> Pedidos </template>
+  </OrdersModalComponent>
   <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm navbartop">
     <div class="container">
       <a class="navbar-brand font-bold text-white navbarTitle" href=""> Delivery </a>
@@ -21,7 +27,7 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item active Icons">
-            <a class="nav-link" href="" style="color: white">
+            <a class="nav-link" @click="showOrdersModal()" style="color: white">
               <!-- Icon SVG -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -163,20 +169,24 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watchEffect } from "vue";
 import { RouterLink, RouterView, useRouter } from "vue-router";
 import CartModalComponent from "@/components/CartModalComponent.vue";
 
 const router = useRouter();
-const isModalOpen = ref(false);
+const isOrdersModalOpen = ref<boolean>(false);
+const modalTitle = ref<string | null>(null);
+const isModalOpen = ref<boolean>(false);
+
+const showOrdersModal = () => {
+  isModalOpen.value = true;
+  modalTitle.value = "Pedidos";
+};
 
 const showCartModal = () => {
   isModalOpen.value = true;
-};
-
-const closeModal = () => {
-  isModalOpen.value = false;
+  modalTitle.value = "Carrinho";
 };
 </script>
 

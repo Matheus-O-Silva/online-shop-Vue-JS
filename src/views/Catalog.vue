@@ -1,10 +1,6 @@
 <template>
   <div>
-    <ModalComponent
-      :isOpen="isModalOpen"
-      :product="selectedProduct"
-      @close="closeModal"
-    />
+    <ModalComponent :isOpen="isModalOpen" :product="null" @close="closeModal" />
     <Preloader v-if="isLoading" />
     <div v-else class="products-list">
       <div
@@ -24,31 +20,35 @@
       </div>
     </div>
   </div>
+
+  {{ "Carrinho: " + store.cart }}
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watchEffect } from "vue";
 import { productsStore } from "@/stores/products";
 import Preloader from "@/components/Preloader.vue";
 import ModalComponent from "@/components/ModalComponent.vue";
 
-const isLoading = ref(true);
-const isModalOpen = ref(false);
+type ProductId = number;
+
+const isLoading = ref<boolean>(true);
+const isModalOpen = ref<boolean>(false);
 const store = productsStore();
 
-const showProductDetails = (id) => {
-  store.getSelectProduct(id); // Busca detalhes do produto
+const showProductDetails = (id: ProductId): void => {
+  store.getSelectProduct(id);
   isModalOpen.value = true;
 };
 
-const closeModal = () => {
+const closeModal = (): void => {
   isModalOpen.value = false;
   store.selectedProduct = null;
 };
 
 watchEffect(() => {
   if (store.products.length > 0) {
-    isLoading.value = false; // Define isLoading como false quando produtos estiverem carregados
+    isLoading.value = false;
   }
 });
 
@@ -64,8 +64,8 @@ onMounted(async () => {
 <style scoped>
 .products-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Exibe 2 produtos por linha */
-  gap: 20px; /* Espaço entre os produtos */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
   margin: 10%;
   margin-top: 50px;
   border: 1px solid #d3d3d3;
@@ -73,29 +73,29 @@ onMounted(async () => {
 }
 
 .product-item {
-  display: flex; /* Usar Flexbox para alinhar a descrição e a imagem */
+  display: flex;
   padding: 16px;
   box-shadow: 0px 0px 14px 1px #e6e6e6;
   cursor: pointer;
-  border-radius: 10px; /* Bordas arredondadas */
-  background-color: #fff; /* Fundo branco */
+  border-radius: 10px;
+  background-color: #fff;
 }
 
 .descriptions {
-  display: flex; /* Flexbox para a descrição */
-  align-items: center; /* Alinhamento vertical no centro */
+  display: flex;
+  align-items: center;
 }
 
 .product-item img {
-  width: 80px; /* Ajuste o tamanho da imagem */
-  height: auto; /* Manter a proporção */
-  border-radius: 8px; /* Bordas arredondadas na imagem */
-  margin-right: 15px; /* Espaço entre a imagem e a descrição */
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 15px;
 }
 
 .description {
   font-size: 15px;
-  flex-grow: 1; /* Para que a descrição ocupe o espaço restante */
+  flex-grow: 1;
 }
 
 .title {
@@ -106,7 +106,7 @@ onMounted(async () => {
 
 .price {
   margin-top: 5px;
-  font-weight: bold; /* Deixar o preço em negrito */
+  font-weight: bold;
 }
 
 .product-description {
@@ -117,10 +117,9 @@ onMounted(async () => {
   display: none;
 }
 
-/* Media Query para telas menores */
 @media (max-width: 600px) {
   .products-list {
-    grid-template-columns: 1fr; /* Exibe 1 produto por linha */
+    grid-template-columns: 1fr;
   }
 }
 </style>

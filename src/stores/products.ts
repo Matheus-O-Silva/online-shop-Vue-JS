@@ -22,8 +22,12 @@ export const productsStore = defineStore('products', {
       const product = await response.json();
       this.selectedProduct = product;
     },
-    addToCart(product: ProductInterface) {
-      //this.cart.push(product);
+    addToCart(product: ProductInterface): void {
+      if(product){
+        this.cart.push(product);
+      }
+      
+      return;
     },
     removeFromCart(id: number) {
       //this.cart = this.cart.filter((item) => item.id !== id);

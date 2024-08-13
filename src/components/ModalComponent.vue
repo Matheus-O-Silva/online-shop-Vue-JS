@@ -37,10 +37,33 @@
           </div>
           <p>{{ store.selectedProduct?.description }}</p>
           <p><strong>Preço:</strong> R${{ store.selectedProduct?.price }}</p>
+          <div class="form-group">
+            <label for="product-quantity"><strong>Quantidade:</strong></label>
+            <input
+              type="number"
+              id="product-quantity"
+              class="form-control"
+              v-model.number="quantity"
+              min="1"
+            />
+          </div>
+          <div class="form-group mt-3">
+            <label for="order-details"><strong>Detalhes do Pedido:</strong></label>
+            <textarea
+              id="order-details"
+              class="form-control"
+              v-model="orderDetails"
+              rows="3"
+              placeholder="Informe suas observações do produto..."
+            ></textarea>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" @click="$emit('close')">
             Fechar
+          </button>
+          <button type="button" class="btn btn-danger" @click="addToCart()">
+            Adicionar ao Carrinho
           </button>
           <slot name="footer"></slot>
         </div>
@@ -55,8 +78,26 @@ import { productsStore } from "@/stores/products";
 import type { ProductInterface } from "@/types/ProductInterface";
 
 const store = productsStore();
+const quantity = ref<number>(1);
+const orderDetails = ref<string>("");
 const imageLoaded = ref<boolean>(false);
 const imageError = ref<boolean>(false);
+
+const addToCart = () => {
+  if (store.selectedProduct) {
+    const productAdded: ProductInterface = {
+      ...store.selectedProduct,
+      quantity: quantity.value,
+      orderDetails: orderDetails.value,
+    };
+
+    store.addToCart(productAdded);
+    console.log(productAdded);
+    //console.log(store.cart);
+  } else {
+    console.error("Nenhum produto selecionado");
+  }
+};
 
 const emit = defineEmits<{
   (event: "close"): void;
