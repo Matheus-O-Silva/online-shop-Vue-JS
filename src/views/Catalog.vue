@@ -39,12 +39,11 @@ const store = productsStore();
 const showProductDetails = (id) => {
   store.getSelectProduct(id); // Busca detalhes do produto
   isModalOpen.value = true;
-  console.log(isModalOpen);
 };
 
 const closeModal = () => {
   isModalOpen.value = false;
-  selectedProduct.value = null;
+  store.selectedProduct = null;
 };
 
 watchEffect(() => {

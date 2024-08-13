@@ -1,7 +1,6 @@
 import Permission from "@/entities/Permission";
 import User from "@/entities/User";
 import httpAdapter from "@/infra/http/HttpClientAdapter";
-import { PAGINATION } from "@/types/pagination";
 import { NAME_TOKEN } from "@/utils/constants";
 
 export default class UserGatewayHttp {

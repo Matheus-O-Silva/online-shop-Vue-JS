@@ -1,4 +1,7 @@
 <template>
+  <CartModalComponent :isOpen="isModalOpen" @close="isModalOpen = false">
+    <template #title> Carrinho </template>
+  </CartModalComponent>
   <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm navbartop">
     <div class="container">
       <a class="navbar-brand font-bold text-white navbarTitle" href=""> Delivery </a>
@@ -51,11 +54,7 @@
           </li>
 
           <li class="nav-item active relative Icons">
-            <a
-              class="nav-link"
-              @click="router.push({ name: 'CartView' })"
-              style="color: white"
-            >
+            <a class="nav-link" @click="showCartModal()" style="color: white">
               <div
                 class="flex"
                 id="navbtncart"
@@ -164,18 +163,21 @@
   </nav>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default {
-  name: "NavbarComponent",
-};
-</script>
-
 <script setup>
+import { ref, onMounted, watchEffect } from "vue";
 import { RouterLink, RouterView, useRouter } from "vue-router";
+import CartModalComponent from "@/components/CartModalComponent.vue";
 
 const router = useRouter();
+const isModalOpen = ref(false);
+
+const showCartModal = () => {
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+};
 </script>
 
 <style scoped>
