@@ -87,12 +87,13 @@ const addToCart = () => {
   if (store.selectedProduct) {
     const productAdded: ProductInterface = {
       ...store.selectedProduct,
+      totalPrice: store.selectedProduct.price * quantity.value,
+      price: store.selectedProduct.price,
       quantity: quantity.value,
       orderDetails: orderDetails.value,
     };
 
     store.addToCart(productAdded);
-    console.log(store.cart);
   } else {
     console.error("error in add product operation");
   }
@@ -111,8 +112,8 @@ watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      imageLoaded.value = true; // Resetar quando um novo produto é selecionado
-      imageError.value = false; // Resetar erros
+      imageLoaded.value = true;
+      imageError.value = false;
     }
   }
 );
@@ -131,19 +132,19 @@ watch(
   width: 60%;
   max-width: 100%;
   height: auto;
-  display: block; /* Garante que a imagem ocupa espaço */
+  display: block;
 }
 
 .placeholder {
-  width: 100%; /* Para que o espaço seja mantido */
+  width: 100%;
   max-width: 400px;
-  height: 300px; /* Defina uma altura fixa para o placeholder */
-  background-color: #f0f0f0; /* Cor de fundo do placeholder */
+  height: 300px;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: #aaa; /* Cor do texto do placeholder */
+  color: #aaa;
 }
 
 .modal {

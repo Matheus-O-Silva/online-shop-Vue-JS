@@ -130,15 +130,11 @@ const isModalOpen = ref<boolean>(false);
 const showOrdersModal = () => {
   isModalOpen.value = true;
   modalTitle.value = "Pedidos";
-  console.log("show the Orders modal");
-  console.log(modalTitle.value);
 };
 
 const showCartModal = () => {
   isModalOpen.value = true;
   modalTitle.value = "Carrinho";
-  console.log("show the cart modal");
-  console.log(modalTitle.value);
 };
 </script>
 

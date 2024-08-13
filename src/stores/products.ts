@@ -30,7 +30,11 @@ export const productsStore = defineStore('products', {
       return;
     },
     removeFromCart(id: number) {
-      //this.cart = this.cart.filter((item) => item.id !== id);
+      if(id){
+        this.cart = this.cart.filter((item) => item.id !== id);
+      }
+      
+      return;
     }
   }
 });

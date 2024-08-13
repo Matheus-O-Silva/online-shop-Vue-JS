@@ -25,18 +25,27 @@
         </div>
         <div class="modal-body">
           <ul class="product-list">
+            <div v-if="!store.cart.length" style="text-align: center">
+              <h1>Carinho Vazio</h1>
+            </div>
             <li v-for="product in store.cart" :key="product.id" class="product-item">
               <img class="image-modal" :src="product.thumbnail" alt="" />
               <div class="product-details">
                 <h2>{{ product.title }}</h2>
                 <p class="price">Preço: R$ {{ product.price.toFixed(2) }}</p>
                 <p>Quantidade: {{ product.quantity }}</p>
-                <p class="total">
-                  Total: R$ {{ (product.price * product.quantity).toFixed(2) }}
+                <p class="total">Total: R$ {{ product.totalPrice.toFixed(2) }}</p>
+              </div>
+              <button @click="removefromCart(product.id)" class="btn btn-danger">
+                Remover
+              </button>
+              <hr class="separator" />
+              <div style="justify-content: center; display: flex">
+                <p>
+                  <b>Total do Carrinho: R$</b>
+                  {{ totalPriceCart }}
                 </p>
               </div>
-              <hr class="separator" />
-              <!-- Linha de separação -->
             </li>
           </ul>
         </div>
@@ -52,11 +61,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineEmits } from "vue";
+import { ref, watch, defineEmits, computed } from "vue";
 import { productsStore } from "@/stores/products";
 import type { ProductInterface } from "@/types/ProductInterface";
 
+const totalPriceCart = computed(() => {
+  return store.cart.reduce((total, product) => {
+    return total + product.price * (product.quantity || 1);
+  }, 0);
+});
+
 const store = productsStore();
+const removefromCart = (id: number) => {
+  store.removeFromCart(id);
+};
+
 const emit = defineEmits<{
   (event: "close"): void;
 }>();
@@ -70,7 +89,6 @@ watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      // Aqui pode adicionar lógica se necessário
     }
   }
 );
@@ -85,30 +103,30 @@ watch(
 .product-item {
   display: flex;
   align-items: center;
-  margin-bottom: 20px; /* Espaço entre os produtos */
-  padding: 10px 0; /* Padding vertical */
+  margin-bottom: 20px;
+  padding: 10px 0;
 }
 
 .image-modal {
-  width: 100px; /* Tamanho fixo para as imagens */
+  width: 100px;
   height: auto;
-  margin-right: 20px; /* Espaçamento entre imagem e detalhes */
-  box-shadow: 0px 0px 14px 1px #2a2828; /* Sombra ao redor da imagem */
+  margin-right: 20px;
+  box-shadow: 0px 0px 14px 1px #2a2828;
 }
 
 .product-details {
-  flex-grow: 1; /* Permite que os detalhes ocupem o espaço restante */
+  flex-grow: 1;
 }
 
 .price,
 .total {
-  font-weight: bold; /* Destaque para preço e total */
+  font-weight: bold;
 }
 
 .separator {
-  border: none; /* Remove a borda */
-  border-top: 1px solid #ccc; /* Linha de separação */
-  margin: 10px 0; /* Margem acima e abaixo da linha */
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
 }
 
 .modal {
