@@ -92,10 +92,9 @@ const addToCart = () => {
     };
 
     store.addToCart(productAdded);
-    console.log(productAdded);
-    //console.log(store.cart);
+    console.log(store.cart);
   } else {
-    console.error("Nenhum produto selecionado");
+    console.error("error in add product operation");
   }
 };
 

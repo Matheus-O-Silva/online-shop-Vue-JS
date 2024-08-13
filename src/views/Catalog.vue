@@ -20,8 +20,6 @@
       </div>
     </div>
   </div>
-
-  {{ "Carrinho: " + store.cart }}
 </template>
 
 <script setup lang="ts">
