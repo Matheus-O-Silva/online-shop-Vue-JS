@@ -2,12 +2,6 @@
   <CartModalComponent :isOpen="isModalOpen" @close="isModalOpen = false">
     <template #title> {{ modalTitle }} </template>
   </CartModalComponent>
-  <OrdersModalComponent
-    :isOrdersModalOpen="isOrdersModalOpen"
-    @close="isModalOpen = false"
-  >
-    <template #title> Pedidos </template>
-  </OrdersModalComponent>
   <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm navbartop">
     <div class="container">
       <a class="navbar-brand font-bold text-white navbarTitle" href=""> Delivery </a>

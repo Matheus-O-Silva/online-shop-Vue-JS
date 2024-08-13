@@ -13,9 +13,6 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">
-            <slot name="title"></slot>
-          </h5>
           <button
             type="button"
             class="btn-close"
@@ -23,7 +20,23 @@
             @click="$emit('close')"
           ></button>
         </div>
-        <div class="modal-body"></div>
+        <div class="modal-body">
+          <ul class="product-list">
+            <li v-for="product in store.cart" :key="product.id" class="product-item">
+              <img class="image-modal" :src="product.thumbnail" alt="" />
+              <div class="product-details">
+                <h2>{{ product.title }}</h2>
+                <p class="price">Preço: R$ {{ product.price.toFixed(2) }}</p>
+                <p>Quantidade: {{ product.quantity }}</p>
+                <p class="total">
+                  Total: R$ {{ (product.price * product.quantity).toFixed(2) }}
+                </p>
+              </div>
+              <hr class="separator" />
+              <!-- Linha de separação -->
+            </li>
+          </ul>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" @click="$emit('close')">
             Fechar
@@ -41,9 +54,6 @@ import { productsStore } from "@/stores/products";
 import type { ProductInterface } from "@/types/ProductInterface";
 
 const store = productsStore();
-const imageLoaded = ref<boolean>(false);
-const imageError = ref<boolean>(false);
-
 const emit = defineEmits<{
   (event: "close"): void;
 }>();
@@ -57,39 +67,45 @@ watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      imageLoaded.value = true; // Resetar quando um novo produto é selecionado
-      imageError.value = false; // Resetar erros
+      // Aqui pode adicionar lógica se necessário
     }
   }
 );
 </script>
 
 <style scoped>
-.product-image {
-  box-shadow: 0px 0px 14px 1px #2a2828;
-  cursor: pointer;
+.product-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product-item {
   display: flex;
-  justify-content: center;
-  margin-bottom: 2%;
+  align-items: center;
+  margin-bottom: 20px; /* Espaço entre os produtos */
+  padding: 10px 0; /* Padding vertical */
 }
 
 .image-modal {
-  width: 60%;
-  max-width: 100%;
+  width: 100px; /* Tamanho fixo para as imagens */
   height: auto;
-  display: block; /* Garante que a imagem ocupa espaço */
+  margin-right: 20px; /* Espaçamento entre imagem e detalhes */
+  box-shadow: 0px 0px 14px 1px #2a2828; /* Sombra ao redor da imagem */
 }
 
-.placeholder {
-  width: 100%; /* Para que o espaço seja mantido */
-  max-width: 400px;
-  height: 300px; /* Defina uma altura fixa para o placeholder */
-  background-color: #f0f0f0; /* Cor de fundo do placeholder */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  color: #aaa; /* Cor do texto do placeholder */
+.product-details {
+  flex-grow: 1; /* Permite que os detalhes ocupem o espaço restante */
+}
+
+.price,
+.total {
+  font-weight: bold; /* Destaque para preço e total */
+}
+
+.separator {
+  border: none; /* Remove a borda */
+  border-top: 1px solid #ccc; /* Linha de separação */
+  margin: 10px 0; /* Margem acima e abaixo da linha */
 }
 
 .modal {

@@ -111,10 +111,6 @@ onMounted(async () => {
   margin-top: 5px;
 }
 
-[v-cloak] {
-  display: none;
-}
-
 @media (max-width: 600px) {
   .products-list {
     grid-template-columns: 1fr;
