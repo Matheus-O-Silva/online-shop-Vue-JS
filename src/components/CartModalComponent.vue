@@ -13,6 +13,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">
+            <slot name="title"></slot>
+          </h5>
           <button
             type="button"
             class="btn-close"
