@@ -1,4 +1,7 @@
 <template>
+  <CartModalComponent :product="null" :isOpen="isModalOpen" @close="isModalOpen = false">
+    <template #title> {{ modalTitle }} </template>
+  </CartModalComponent>
   <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm navbartop">
     <div class="container">
       <a class="navbar-brand font-bold text-white navbarTitle" href=""> Delivery </a>
@@ -18,7 +21,7 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item active Icons">
-            <a class="nav-link" href="" style="color: white">
+            <a class="nav-link" @click="showOrdersModal()" style="color: white">
               <!-- Icon SVG -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -51,11 +54,7 @@
           </li>
 
           <li class="nav-item active relative Icons">
-            <a
-              class="nav-link"
-              @click="router.push({ name: 'CartView' })"
-              style="color: white"
-            >
+            <a class="nav-link" @click="showCartModal()" style="color: white">
               <div
                 class="flex"
                 id="navbtncart"
@@ -82,53 +81,7 @@
                   id="tooltipcart"
                 ></div>
               </div>
-              <div class="absolute top-0.5 right-0">
-                <span
-                  v-if="cartItemCount > 0"
-                  class="text-xs text-black font-bold rounded-lg px-1 bg-red-400 opacity-80"
-                >
-                  3
-                  <!-- Example item count -->
-                </span>
-              </div>
-            </a>
-          </li>
-
-          <!-- Check if user is admin -->
-          <li v-if="isAdmin" class="nav-item active relative">
-            <a class="nav-link" href="">
-              <div
-                class="flex"
-                id="navbtnviewfood"
-                aria-describedby="tooltipviewfood"
-                data-tooltip-text="View Food"
-              >
-                <!-- Icon SVG -->
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <div
-                  class="text-md mt-2 bg-gray-600 text-white absolute rounded bg-opacity-50 shadow-xl hidden top-8 py-1 px-2 wh2itespace-pre"
-                  id="tooltipviewfood"
-                ></div>
-                <span class="sr-only">View Food</span>
-              </div>
+              <div class="absolute top-0.5 right-0"></div>
             </a>
           </li>
 
@@ -164,18 +117,25 @@
   </nav>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default {
-  name: "NavbarComponent",
-};
-</script>
-
-<script setup>
+<script setup lang="ts">
+import { ref, onMounted, watchEffect } from "vue";
 import { RouterLink, RouterView, useRouter } from "vue-router";
+import CartModalComponent from "@/components/CartModalComponent.vue";
 
 const router = useRouter();
+const isOrdersModalOpen = ref<boolean>(false);
+const modalTitle = ref<string | null>(null);
+const isModalOpen = ref<boolean>(false);
+
+const showOrdersModal = () => {
+  isModalOpen.value = true;
+  modalTitle.value = "Pedidos";
+};
+
+const showCartModal = () => {
+  isModalOpen.value = true;
+  modalTitle.value = "Carrinho";
+};
 </script>
 
 <style scoped>

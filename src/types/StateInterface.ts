@@ -2,7 +2,7 @@ import type { ProductInterface } from "./ProductInterface";
 
 export interface StateInterface {
     products: ProductInterface[];
-    cart: [];
+    cart: ProductInterface[];
     modal: boolean;
     selectedProduct: ProductInterface | null;
 }

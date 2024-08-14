@@ -37,10 +37,33 @@
           </div>
           <p>{{ store.selectedProduct?.description }}</p>
           <p><strong>Preço:</strong> R${{ store.selectedProduct?.price }}</p>
+          <div class="form-group">
+            <label for="product-quantity"><strong>Quantidade:</strong></label>
+            <input
+              type="number"
+              id="product-quantity"
+              class="form-control"
+              v-model.number="quantity"
+              min="1"
+            />
+          </div>
+          <div class="form-group mt-3">
+            <label for="order-details"><strong>Detalhes do Pedido:</strong></label>
+            <textarea
+              id="order-details"
+              class="form-control"
+              v-model="orderDetails"
+              rows="3"
+              placeholder="Informe suas observações do produto..."
+            ></textarea>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" @click="$emit('close')">
             Fechar
+          </button>
+          <button type="button" class="btn btn-danger" @click="addToCart()">
+            Adicionar ao Carrinho
           </button>
           <slot name="footer"></slot>
         </div>
@@ -55,8 +78,26 @@ import { productsStore } from "@/stores/products";
 import type { ProductInterface } from "@/types/ProductInterface";
 
 const store = productsStore();
+const quantity = ref<number>(1);
+const orderDetails = ref<string>("");
 const imageLoaded = ref<boolean>(false);
 const imageError = ref<boolean>(false);
+
+const addToCart = () => {
+  if (store.selectedProduct) {
+    const productAdded: ProductInterface = {
+      ...store.selectedProduct,
+      totalPrice: store.selectedProduct.price * quantity.value,
+      price: store.selectedProduct.price,
+      quantity: quantity.value,
+      orderDetails: orderDetails.value,
+    };
+
+    store.addToCart(productAdded);
+  } else {
+    console.error("error in add product operation");
+  }
+};
 
 const emit = defineEmits<{
   (event: "close"): void;
@@ -71,8 +112,8 @@ watch(
   () => store.selectedProduct,
   (newProduct) => {
     if (newProduct) {
-      imageLoaded.value = true; // Resetar quando um novo produto é selecionado
-      imageError.value = false; // Resetar erros
+      imageLoaded.value = true;
+      imageError.value = false;
     }
   }
 );
@@ -91,19 +132,19 @@ watch(
   width: 60%;
   max-width: 100%;
   height: auto;
-  display: block; /* Garante que a imagem ocupa espaço */
+  display: block;
 }
 
 .placeholder {
-  width: 100%; /* Para que o espaço seja mantido */
+  width: 100%;
   max-width: 400px;
-  height: 300px; /* Defina uma altura fixa para o placeholder */
-  background-color: #f0f0f0; /* Cor de fundo do placeholder */
+  height: 300px;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: #aaa; /* Cor do texto do placeholder */
+  color: #aaa;
 }
 
 .modal {
