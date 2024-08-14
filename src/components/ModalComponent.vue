@@ -88,7 +88,7 @@ const addToCart = () => {
     const productAdded: ProductInterface = {
       ...store.selectedProduct,
       totalPrice: store.selectedProduct.price * quantity.value,
-      price: store.selectedProduct.price,
+      price: store.selectedProduct.price * quantity.value,
       quantity: quantity.value,
       orderDetails: orderDetails.value,
     };

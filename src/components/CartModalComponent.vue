@@ -13,8 +13,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">
-            <slot name="title"></slot>
+          <h5 class="modal-title">
+            <slot class="titleModal" name="title"></slot>
           </h5>
           <button
             type="button"
@@ -32,26 +32,31 @@
               <img class="image-modal" :src="product.thumbnail" alt="" />
               <div class="product-details">
                 <h2>{{ product.title }}</h2>
-                <p class="price">Preço: R$ {{ product.price.toFixed(2) }}</p>
+                <p class="price">Preço: R${{ product.price.toFixed(2) }}</p>
                 <p>Quantidade: {{ product.quantity }}</p>
-                <p class="total">Total: R$ {{ product.totalPrice.toFixed(2) }}</p>
+                <p class="total">Total: R${{ product.totalPrice.toFixed(2) }}</p>
               </div>
               <button @click="removefromCart(product.id)" class="btn btn-danger">
                 Remover
               </button>
               <hr class="separator" />
-              <div style="justify-content: center; display: flex">
-                <p>
-                  <b>Total do Carrinho: R$</b>
-                  {{ totalPriceCart }}
-                </p>
-              </div>
             </li>
           </ul>
+        </div>
+        <div v-if="totalPriceCart > 0" class="totalPriceCart">
+          <b>Total do Carrinho: R${{ totalPriceCart }}</b>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" @click="$emit('close')">
             Fechar
+          </button>
+          <button
+            v-if="totalPriceCart > 0"
+            type="button"
+            class="btn btn-danger"
+            @click="confirmOrder()"
+          >
+            Finalizar Compra
           </button>
           <slot name="footer"></slot>
         </div>
@@ -66,14 +71,20 @@ import { productsStore } from "@/stores/products";
 import type { ProductInterface } from "@/types/ProductInterface";
 
 const totalPriceCart = computed(() => {
-  return store.cart.reduce((total, product) => {
-    return total + product.price * (product.quantity || 1);
-  }, 0);
+  return store.cart
+    .reduce((total, product) => {
+      return total + product.price * (product.quantity || 1);
+    }, 0)
+    .toFixed(2);
 });
 
 const store = productsStore();
 const removefromCart = (id: number) => {
   store.removeFromCart(id);
+};
+
+const confirmOrder = () => {
+  console.log("finalizar");
 };
 
 const emit = defineEmits<{
@@ -95,6 +106,9 @@ watch(
 </script>
 
 <style scoped>
+.modal-title {
+  font-size: 30px;
+}
 .product-list {
   list-style-type: none;
   padding: 0;
@@ -103,7 +117,7 @@ watch(
 .product-item {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 10px 0;
 }
 
@@ -111,7 +125,7 @@ watch(
   width: 100px;
   height: auto;
   margin-right: 20px;
-  box-shadow: 0px 0px 14px 1px #2a2828;
+  box-shadow: 0px 0px 14px 1px #5a5555;
 }
 
 .product-details {
@@ -131,5 +145,14 @@ watch(
 
 .modal {
   transition: opacity 0.3s ease;
+}
+
+.totalPriceCart {
+  height: 5%;
+  justify-content: center;
+  display: flex;
+  margin-top: 2%;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 </style>
