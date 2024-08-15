@@ -1,6 +1,31 @@
 <template>
-  <div>
-    <Preloader v-if="isLoading" />
+  <Preloader v-if="isLoading" />
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm" style="width: 400px">
+      <h3 class="card-title text-center">Login</h3>
+      <form @submit.prevent="handleLogin">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" v-model="email" required />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            v-model="password"
+            required
+          />
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </div>
+      </form>
+      <div class="text-center mt-3">
+        <a href="#">Esqueceu sua senha?</a>
+      </div>
+    </div>
   </div>
 </template>
 
