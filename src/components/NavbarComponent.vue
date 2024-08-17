@@ -102,7 +102,9 @@
 
           <!-- Authentication Links -->
           <li class="nav-item Icons">
-            <a class="nav-link" href="" style="color: white">Entrar</a>
+            <router-link class="nav-link" style="color: white" :to="{ name: 'Auth' }"
+              >Entrar
+            </router-link>
           </li>
 
           <!-- disabled link for spacing -->
