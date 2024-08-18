@@ -1,7 +1,13 @@
 <template>
-  <CartModalComponent :product="null" :isOpen="isModalOpen" @close="isModalOpen = false">
-    <template #title> {{ modalTitle }}</template>
-  </CartModalComponent>
+  <CartModalComponent
+    :product="null"
+    :isOpen="isModalOpen"
+    @close="isModalOpen = false"
+  />
+  <OrdersModalComponent
+    :isOrdersModalOpen="isOrdersModalOpen"
+    @close="isOrdersModalOpen = false"
+  />
   <nav class="navbar navbar-expand-md navbar-light bg-danger shadow-sm navbartop">
     <div class="container">
       <a class="navbar-brand font-bold text-white navbarTitle" href=""> Delivery </a>
@@ -121,6 +127,7 @@
 import { ref, onMounted, watchEffect } from "vue";
 import { RouterLink, RouterView, useRouter } from "vue-router";
 import CartModalComponent from "@/components/CartModalComponent.vue";
+import OrdersModalComponent from "@/components/OrdersModalComponent.vue";
 
 const router = useRouter();
 const isOrdersModalOpen = ref<boolean>(false);
@@ -128,13 +135,11 @@ const modalTitle = ref<string | null>(null);
 const isModalOpen = ref<boolean>(false);
 
 const showOrdersModal = () => {
-  isModalOpen.value = true;
-  modalTitle.value = "Pedidos";
+  isOrdersModalOpen.value = true;
 };
 
 const showCartModal = () => {
   isModalOpen.value = true;
-  modalTitle.value = "Carrinho";
 };
 </script>
 

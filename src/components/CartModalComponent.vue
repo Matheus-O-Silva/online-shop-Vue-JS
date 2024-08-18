@@ -13,9 +13,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">
-            <slot class="titleModal" name="title"></slot>
-          </h5>
+          <h5 class="modal-title">Carrinho</h5>
           <button
             type="button"
             class="btn-close"
