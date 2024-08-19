@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineEmits } from "vue";
+import { ref, defineEmits, watch } from "vue";
 import Swal from "sweetalert2";
 import { productsStore } from "@/stores/products";
 import type { ProductInterface } from "@/types/ProductInterface";
@@ -102,6 +102,13 @@ const addToCart = () => {
       icon: "success",
       confirmButtonText: "Ok",
     });
+
+    quantity.value = 1;
+    orderDetails.value = "";
+    imageLoaded.value = false;
+    imageError.value = false;
+
+    emit("close");
   } else {
     console.error("error in add product operation");
   }
