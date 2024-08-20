@@ -79,6 +79,11 @@ const totalPriceCart = computed(() => {
     .toFixed(2);
 });
 
+const props = defineProps<{
+  isOpen: boolean;
+  product: ProductInterface | null;
+}>();
+
 const store = productsStore();
 const removefromCart = (id: number) => {
   store.removeFromCart(id);
@@ -91,16 +96,20 @@ const removefromCart = (id: number) => {
 };
 
 const confirmOrder = () => {
-  console.log("finalizar");
+  store.cart = [];
+
+  Swal.fire({
+    title: "Compra Finalizada com sucesso",
+    text: "",
+    icon: "success",
+    confirmButtonText: "Ok",
+  });
+
+  emit("close");
 };
 
 const emit = defineEmits<{
   (event: "close"): void;
-}>();
-
-const props = defineProps<{
-  isOpen: boolean;
-  product: ProductInterface | null;
 }>();
 
 watch(
