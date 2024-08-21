@@ -1,9 +1,8 @@
 <template>
-  <Preloader v-if="isLoading" />
   <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow-sm" id="main-card" style="width: 400px">
       <h3 class="card-title text-center">Login</h3>
-      <form @submit.prevent="handleLogin">
+      <form @submit.prevent="login">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input type="email" class="form-control" id="email" v-model="email" required />
@@ -32,9 +31,32 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { productsStore } from "@/stores/products";
+import { useRouter } from "vue-router";
+import AuthuseStore from "@/stores/auth";
 
-const isLoading = ref<boolean>(true);
-const isModalOpen = ref<boolean>(false);
+const router = useRouter();
+const email = ref<string>("");
+const password = ref<string>("");
+let errorMsg = ref<string>("");
+const authStore = AuthuseStore();
+
+const login = async () => {
+  console.log("testss");
+  try {
+    await authStore
+      .auth(email.value, password.value)
+      .then(() => {
+        router.push({
+          name: "Catalog",
+        });
+      })
+      .catch((err) => {
+        /*errorMsg.value = err.response.data.message;*/
+      });
+  } catch (error) {
+    console.error("Falha no login:", error);
+  }
+};
 </script>
 
 <style scoped>

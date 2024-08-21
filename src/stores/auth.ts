@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { AuthInterfaceState } from '@/types/AuthInterfaceState';
+import UserGatewayHttp from "@/infra/gateway/UserGatewayHttp";
 import axios from 'axios';
+
+const userGateway = new UserGatewayHttp();
 
 export const useAuthStore = defineStore('auth', {
     state: (): AuthInterfaceState => ({
@@ -8,20 +11,11 @@ export const useAuthStore = defineStore('auth', {
       user: null,
     }),
     actions: {
-        async login(email: string, password: string) {
-          try {
-            const response = await axios.post('/api/login', { email, password });
-            this.token = response.data.token;
-            this.user = response.data.user;
-            
-            if(this.token){
-                localStorage.setItem('token', this.token);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
-            }
-            
-          } catch (error) {
-            throw new Error('Erro ao realizar login');
-          }
+        async auth(email: string, password: string): Promise<Response> {
+            return await userGateway.login(email, password);
+        },
+        async getMe() {
+            await userGateway.getMe().then((user) => (this.me = user));
         },
         logout() {
           this.token = null;

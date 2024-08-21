@@ -7,7 +7,7 @@ export default class UserGatewayHttp {
   async login(email: string, password: string): Promise<Response> {
     const device_name = `vue_app${navigator.userAgent}`;
     return await httpAdapter
-      .post("/auth", {
+      .post("/login", {
         email,
         password,
         device_name,
