@@ -71,16 +71,15 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  margin: 10%;
+  margin: 5%;
   margin-top: 50px;
-  border: 1px solid #d3d3d3;
   border-radius: 10px;
 }
 
 .product-item {
   display: flex;
   padding: 16px;
-  box-shadow: 0px 0px 14px 1px #e6e6e6;
+  box-shadow: 0px 0px 14px 1px #615a5a;
   cursor: pointer;
   border-radius: 10px;
   background-color: #fff;
@@ -93,14 +92,23 @@ onMounted(async () => {
 
 .product-item img {
   width: 80px;
-  height: auto;
+  height: 80px;
+  object-fit: cover;
   border-radius: 8px;
   margin-right: 15px;
+  background-color: #f0f0f0;
+  flex-shrink: 0;
 }
 
 .description {
   font-size: 15px;
   flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .title {
@@ -116,6 +124,11 @@ onMounted(async () => {
 
 .product-description {
   margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 @media (max-width: 600px) {

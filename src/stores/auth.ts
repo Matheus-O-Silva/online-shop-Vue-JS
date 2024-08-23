@@ -12,7 +12,6 @@ export const useAuthStore = defineStore('auth', {
     }),
     actions: {
         async auth(email: string, password: string): Promise<Response> {
-          //debugger;
           return await userGateway.login(email, password);
         },
         async getMe() {

@@ -12,13 +12,26 @@ export const productsStore = defineStore('products', {
 
   actions: {
     async fetchProductsFromDB() {
-      const response = await fetch('https://dummyjson.com/products');
-      const json = await response.json();
-      this.products = json.products.slice(0, 8);
+      const cachedProducts = localStorage.getItem('products');
+      if (cachedProducts) {
+        this.products = JSON.parse(cachedProducts);
+        return;
+      }
+
+      try {
+        const response = await fetch('https://dummyjson.com/products');
+        if (!response.ok) throw new Error('Failed to fetch products');
+        const json = await response.json();
+        this.products = json.products.slice(0, 8);
+        // store products in cache
+        localStorage.setItem('products', JSON.stringify(this.products));
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     },
     async getSelectProduct(id: number) {
-      const response = await fetch(`https://dummyjson.com/products/${id}`);
-      const product = await response.json();
+      const response       = await fetch(`https://dummyjson.com/products/${id}`);
+      const product        = await response.json();
       this.selectedProduct = product;
     },
     addToCart(product: ProductInterface): void {
@@ -26,7 +39,7 @@ export const productsStore = defineStore('products', {
         const existingProduct = this.cart.find((item) => item.id === product.id);
 
         if (existingProduct) {
-          existingProduct.quantity = (existingProduct.quantity || 1) + (product.quantity || 1);
+          existingProduct.quantity   = (existingProduct.quantity || 1) + (product.quantity || 1);
           existingProduct.totalPrice = existingProduct.quantity * existingProduct.price;
         }else {
           this.cart.push(product);

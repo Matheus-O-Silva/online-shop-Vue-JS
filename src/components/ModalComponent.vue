@@ -136,7 +136,7 @@ watch(
 
 <style scoped>
 .product-image {
-  box-shadow: 0px 0px 14px 1px #2a2828;
+  box-shadow: 0px 0px 14px 1px #5f5757;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -154,7 +154,7 @@ watch(
   width: 100%;
   max-width: 400px;
   height: 300px;
-  background-color: #f0f0f0;
+  background-color: #e6d1d1;
   display: flex;
   justify-content: center;
   align-items: center;
