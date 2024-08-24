@@ -3,6 +3,11 @@
     <div class="card p-4 shadow-sm" id="main-card" style="width: 400px">
       <h3 class="card-title text-center">Login</h3>
       <form @submit.prevent="login">
+        <Alert
+          ><template v-slot:alert>
+            <p>{{ errorMsg }}</p>
+          </template></Alert
+        >
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input type="email" class="form-control" id="email" v-model="email" required />
@@ -31,6 +36,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { productsStore } from "@/stores/products";
+import Alert from "../components/Alert.vue";
 import { useRouter } from "vue-router";
 import AuthuseStore from "@/stores/auth";
 
@@ -41,8 +47,8 @@ let errorMsg = ref<string>("");
 const authStore = AuthuseStore();
 
 const login = async () => {
-  console.log("testss");
   try {
+    //debugger;
     await authStore
       .auth(email.value, password.value)
       .then(() => {
@@ -51,10 +57,10 @@ const login = async () => {
         });
       })
       .catch((err) => {
-        /*errorMsg.value = err.response.data.message;*/
+        errorMsg.value = err.response.data.message;
       });
   } catch (error) {
-    console.error("Falha no login:", error);
+    console.error(error);
   }
 };
 </script>
