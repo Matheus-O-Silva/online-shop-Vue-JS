@@ -11,7 +11,7 @@
           @click="showProductDetails(product.id)"
         >
           <div class="descriptions">
-            <img :src="product.thumbnail" alt="" />
+            <img loading="lazy" :src="product.thumbnail" alt="" />
             <div class="description">
               <h2 class="title">{{ product.brand }}</h2>
               <p class="price">R${{ product.price }}</p>
@@ -36,8 +36,8 @@ const isLoading = ref<boolean>(true);
 const isModalOpen = ref<boolean>(false);
 const store = productsStore();
 
-const showProductDetails = (id: ProductId): void => {
-  store.getSelectProduct(id);
+const showProductDetails = async (id: ProductId): Promise<void> => {
+  await store.getSelectProduct(id);
   isModalOpen.value = true;
 };
 
