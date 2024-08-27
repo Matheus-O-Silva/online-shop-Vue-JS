@@ -19,6 +19,8 @@
   border-radius: 10px;
   background-color: #fff;
   align-items: center;
+  width: 100%; /* Certifica-se de que o skeleton ocupa 100% da largura disponível */
+  height: 120px; /* Mesma altura que o produto real */
 }
 
 .skeleton-image {

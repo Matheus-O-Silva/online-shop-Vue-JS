@@ -2,38 +2,43 @@
   <div>
     <ModalComponent :isOpen="isModalOpen" :product="null" @close="closeModal" />
     <div class="catalog-container">
-      <Preloader v-if="isLoading" />
-      <div v-else class="products-list">
-        <div
-          class="product-item"
-          v-for="product in store.products"
-          :key="product.id"
-          @click="showProductDetails(product.id)"
-        >
-          <div class="descriptions">
-            <img loading="lazy" :src="product.thumbnail" alt="" />
-            <div class="description">
-              <h2 class="title">{{ product.brand }}</h2>
-              <p class="price">R${{ product.price }}</p>
-              <p class="product-description">{{ product.description }}</p>
+      <div class="products-list">
+        <!-- Exibir o skeleton enquanto os produtos estão sendo carregados -->
+        <template v-if="isLoading">
+          <ProductSkeleton v-for="n in 8" :key="n" />
+        </template>
+        <template v-else>
+          <div
+            class="product-item"
+            v-for="product in store.products"
+            :key="product.id"
+            @click="showProductDetails(product.id)"
+          >
+            <div class="descriptions">
+              <img loading="lazy" :src="product.thumbnail" alt="" />
+              <div class="description">
+                <h2 class="title">{{ product.brand }}</h2>
+                <p class="price">R${{ product.price }}</p>
+                <p class="product-description">{{ product.description }}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
 import { productsStore } from "@/stores/products";
-import Preloader from "@/components/Preloader.vue";
 import ModalComponent from "@/components/ModalComponent.vue";
+import ProductSkeleton from "@/components/ProductSkeleton.vue";
 
 type ProductId = number;
 
-const isLoading = ref<boolean>(true);
 const isModalOpen = ref<boolean>(false);
+const isLoading = ref<boolean>(true); // Controle de estado de carregamento
 const store = productsStore();
 
 const showProductDetails = async (id: ProductId): Promise<void> => {
@@ -46,15 +51,11 @@ const closeModal = (): void => {
   store.selectedProduct = null;
 };
 
-watchEffect(() => {
-  if (store.products.length > 0) {
-    isLoading.value = false;
-  }
-});
-
 onMounted(async () => {
   try {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await store.fetchProductsFromDB();
+    isLoading.value = false;
   } catch (error) {
     console.error("Failed to fetch products:", error);
   }
@@ -83,11 +84,15 @@ onMounted(async () => {
   cursor: pointer;
   border-radius: 10px;
   background-color: #fff;
+  align-items: center;
+  width: 100%;
+  height: 120px; /* Definindo altura fixa para o card */
 }
 
 .descriptions {
   display: flex;
   align-items: center;
+  flex-grow: 1;
 }
 
 .product-item img {
@@ -106,19 +111,15 @@ onMounted(async () => {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Garante que o conteúdo ocupe a altura do card */
 }
 
-.title {
-  margin-top: 5px;
-  font-size: 17px;
-  font-weight: bold;
-}
-
+.title,
 .price {
-  margin-top: 5px;
+  margin: 0;
   font-weight: bold;
 }
 
@@ -128,7 +129,9 @@ onMounted(async () => {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2; /* Limita a descrição a 2 linhas */
+  font-size: 14px;
+  color: #555;
 }
 
 @media (max-width: 600px) {
